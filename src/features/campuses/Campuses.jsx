@@ -11,13 +11,16 @@ import {
   Grid,
   Box,
 } from "@mui/material";
+import { fetchStudents } from "../students/studentsSlice";
 
 const Campuses = () => {
   const dispatch = useDispatch();
   const campuses = useSelector((state) => state.campuses);
+  const students = useSelector((state) => state.students);
 
   useEffect(() => {
     dispatch(fetchCampuses());
+    dispatch(fetchStudents());
   }, [dispatch]);
 
   return (
@@ -36,7 +39,9 @@ const Campuses = () => {
         </Button>
       </Box>
       <Grid container spacing={2}>
-        {campuses.map((campus) => (
+        {campuses.map((campus) => {
+          const studentCount = students.filter(student => student.campusId === campus.id).length;
+          return (
           <Grid
             item
             xs={12}
@@ -59,6 +64,9 @@ const Campuses = () => {
                   <Typography gutterBottom variant="h5" component="div">
                     {campus.name}
                   </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                      {studentCount} {studentCount === 1 ? 'Student' : 'Students'}
+                    </Typography>
                 </CardContent>
               </CardActionArea>
               <Button size="small" color="primary">
@@ -69,7 +77,8 @@ const Campuses = () => {
               </Button>
             </Card>
           </Grid>
-        ))}
+          );
+        })}
       </Grid>
     </div>
   );
