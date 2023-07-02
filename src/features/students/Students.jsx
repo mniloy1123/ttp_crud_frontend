@@ -21,8 +21,9 @@ const Students = () => {
   return (
     <div>
       <h1>All Students</h1>
+      <Button variant="contained" color="primary">Add Students</Button>
       {students.map((student) => (
-        <Card key={student.id} sx={{ maxWidth: 250 }}>
+        <Card key={student.id} sx={{ maxWidth: 200 }}>
           <CardActionArea>
             <CardMedia
               component="img"
