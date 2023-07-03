@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStudents } from "./studentsSlice";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-} from "@mui/material";
+import { Card, CardActionArea, CardContent, CardMedia, Button, Typography } from "@mui/material";
 
 const Students = () => {
   const dispatch = useDispatch();
@@ -21,7 +14,9 @@ const Students = () => {
   return (
     <div>
       <h1>All Students</h1>
-      <Button variant="contained" color="primary">Add Students</Button>
+      <Button variant="contained" color="primary">
+        Add Students
+      </Button>
       {students.map((student) => (
         <Card key={student.id} sx={{ maxWidth: 200 }}>
           <CardActionArea>
