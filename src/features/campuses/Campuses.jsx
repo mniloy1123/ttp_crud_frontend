@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchCampuses } from "./campusesSlice";
 import {
   Card,
@@ -14,6 +15,7 @@ import {
 import { fetchStudents } from "../students/studentsSlice";
 
 const Campuses = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const campuses = useSelector((state) => state.campuses);
   const students = useSelector((state) => state.students);
@@ -34,49 +36,56 @@ const Campuses = () => {
         <Typography variant="h4" component="div">
           Campus Listing
         </Typography>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/add-campus")}
+        >
           Add Campus
         </Button>
       </Box>
       <Grid container spacing={2}>
         {campuses.map((campus) => {
-          const studentCount = students.filter(student => student.campusId === campus.id).length;
+          const studentCount = students.filter(
+            (student) => student.campusId === campus.id
+          ).length;
           return (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            lg={3}
-            xl={2}
-            marginLeft={2}
-            key={campus.id}
-          >
-            <Card sx={{ maxWidth: 345 }}>
-              <CardActionArea>
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={campus.imageUrl}
-                  alt={campus.name}
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {campus.name}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                      {studentCount} {studentCount === 1 ? 'Student' : 'Students'}
+            <Grid
+              item
+              xs={12}
+              sm={6}
+              md={4}
+              lg={3}
+              xl={2}
+              marginLeft={2}
+              key={campus.id}
+            >
+              <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={campus.imageUrl}
+                    alt={campus.name}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {campus.name}
                     </Typography>
-                </CardContent>
-              </CardActionArea>
-              <Button size="small" color="primary">
-                Edit
-              </Button>
-              <Button size="small" color="error">
-                Delete
-              </Button>
-            </Card>
-          </Grid>
+                    <Typography variant="body2" color="textSecondary">
+                      {studentCount}{" "}
+                      {studentCount === 1 ? "Student" : "Students"}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+                <Button size="small" color="primary">
+                  Edit
+                </Button>
+                <Button size="small" color="error">
+                  Delete
+                </Button>
+              </Card>
+            </Grid>
           );
         })}
       </Grid>
