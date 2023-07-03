@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Campuses from "./features/campuses/Campuses";
 import Students from "./features/students/Students";
+import AddCampus from "./features/campuses/AddCampus";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/campuses" element={<Campuses />} />
           <Route path="/students" element={<Students />} />
+          <Route path="/add-campus" element={<AddCampus />} />
         </Routes>
       </Router>
     </Provider>

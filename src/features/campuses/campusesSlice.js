@@ -9,15 +9,27 @@ export const fetchCampuses = createAsyncThunk(
   }
 );
 
+export const addCampus = createAsyncThunk(
+  "campuses/addCampus",
+  async (campus) => {
+    const response = await axios.post("http://localhost:8080/api/campuses", campus);
+    return response.data;
+  }
+);
+
 const campusesSlice = createSlice({
   name: "campuses",
   initialState: [],
   reducers: {},
   extraReducers: (builder) => {
-     builder.addCase(fetchCampuses.fulfilled, (state, action) => {
+    builder.addCase(fetchCampuses.fulfilled, (state, action) => {
       return action.payload;
-      });
+    });
+    builder.addCase(addCampus.fulfilled, (state, action) => {
+      state.push(action.payload);
+    });
   },
 });
+
 
 export default campusesSlice.reducer;
