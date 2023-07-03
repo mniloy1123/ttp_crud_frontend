@@ -8,7 +8,7 @@ import { fetchStudents } from "../students/studentsSlice";
 const Campuses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const campuses = useSelector((state) => state.campuses);
+  const campuses = useSelector((state) => state.campuses.list);
   const students = useSelector((state) => state.students);
 
   useEffect(() => {
@@ -19,6 +19,10 @@ const Campuses = () => {
   const handleDelete = (id) => {
     dispatch(deleteCampus(id));
   };
+
+  const handleCardClick = (id) => {
+    navigate(`/campuses/${id}`);
+  }
 
   return (
     <div>
@@ -35,7 +39,7 @@ const Campuses = () => {
           const studentCount = students.filter((student) => student.campusId === campus.id).length;
           return (
             <Grid item xs={12} sm={6} md={4} lg={3} xl={2} marginLeft={2} key={campus.id}>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card onClick={() => handleCardClick(campus.id)} sx={{ maxWidth: 345 }}>
                 <CardActionArea>
                   <CardMedia component="img" height="140" image={campus.imageUrl} alt={campus.name} />
                   <CardContent>
