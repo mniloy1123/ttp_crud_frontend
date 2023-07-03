@@ -1,17 +1,8 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchCampuses } from "./campusesSlice";
-import {
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  Grid,
-  Box,
-} from "@mui/material";
+import { fetchCampuses, deleteCampus } from "./campusesSlice";
+import { Card, CardActionArea, CardContent, CardMedia, Button, Typography, Grid, Box } from "@mui/material";
 import { fetchStudents } from "../students/studentsSlice";
 
 const Campuses = () => {
@@ -25,63 +16,41 @@ const Campuses = () => {
     dispatch(fetchStudents());
   }, [dispatch]);
 
+  const handleDelete = (id) => {
+    dispatch(deleteCampus(id));
+  };
+
   return (
     <div>
-      <Box
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-        margin={2}
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="center" margin={2}>
         <Typography variant="h4" component="div">
           Campus Listing
         </Typography>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => navigate("/add-campus")}
-        >
+        <Button variant="contained" color="primary" onClick={() => navigate("/add-campus")}>
           Add Campus
         </Button>
       </Box>
       <Grid container spacing={2}>
         {campuses.map((campus) => {
-          const studentCount = students.filter(
-            (student) => student.campusId === campus.id
-          ).length;
+          const studentCount = students.filter((student) => student.campusId === campus.id).length;
           return (
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              xl={2}
-              marginLeft={2}
-              key={campus.id}
-            >
+            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} marginLeft={2} key={campus.id}>
               <Card sx={{ maxWidth: 345 }}>
                 <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={campus.imageUrl}
-                    alt={campus.name}
-                  />
+                  <CardMedia component="img" height="140" image={campus.imageUrl} alt={campus.name} />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {campus.name}
                     </Typography>
                     <Typography variant="body2" color="textSecondary">
-                      {studentCount}{" "}
-                      {studentCount === 1 ? "Student" : "Students"}
+                      {studentCount} {studentCount === 1 ? "Student" : "Students"}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
                 <Button size="small" color="primary">
                   Edit
                 </Button>
-                <Button size="small" color="error">
+                <Button size="small" color="error" onClick={() => handleDelete(campus.id)}>
                   Delete
                 </Button>
               </Card>
