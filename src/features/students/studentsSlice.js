@@ -6,6 +6,11 @@ export const fetchStudents = createAsyncThunk("students/fetchStudents", async ()
   return response.data;
 });
 
+export const updateStudent = createAsyncThunk("students/updateStudent", async ({id, student}) => {
+  const response = await axios.put(`http://localhost:8080/api/students/${id}`, student);
+  return response.data;
+});
+
 const campusesSlice = createSlice({
   name: "students",
   initialState: [],
