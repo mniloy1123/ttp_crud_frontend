@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchSingleCampus } from "./campusesSlice";
+import {  fetchSingleCampus } from "./campusesSlice";
 
 const SingleCampusPage = () => {
   const { id } = useParams();
@@ -20,6 +20,17 @@ const SingleCampusPage = () => {
       <p>{campus.address}</p>
       <p>{campus.description}</p>
       <h2>Students on campus</h2>
+      {campus.students &&
+        campus.students.map((student) => {
+          console.log("Student:", student);
+          return (
+            <div key={student.id}>
+              <img src={student.imageUrl} alt={`${student.firstName} ${student.lastName}`} />
+              <p>{`${student.firstName} ${student.lastName}`}</p>
+              <p>{campus.name}</p>
+            </div>
+          );
+        })}
     </div>
   );
 };
