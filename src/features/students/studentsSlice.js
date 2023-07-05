@@ -20,15 +20,19 @@ export const fetchSingleStudent = createAsyncThunk(
   }  
 )
 
-const campusesSlice = createSlice({
+const studentsSlice = createSlice({
   name: "students",
-  initialState: [],
+  initialState: { list: [], singleStudent: {} },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchStudents.fulfilled, (state, action) => {
       return action.payload;
     });
+    builder.addCase(fetchSingleStudent.fulfilled, (state, action) => {
+      console.log("Fetched single student:", action.payload);
+      state.singleStudent = action.payload;
+    });
   },
 });
 
-export default campusesSlice.reducer;
+export default studentsSlice.reducer;
