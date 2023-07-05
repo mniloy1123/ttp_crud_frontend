@@ -8,6 +8,7 @@ import Campuses from "./features/campuses/Campuses";
 import Students from "./features/students/Students";
 import AddCampus from "./features/campuses/AddCampus";
 import SingleCampusPage from "./features/campuses/SingleCampusPage";
+import SingleStudentPage from "./features/students/SingleStudentPage";
 import EditCampusPage from "./features/campuses/EditCampusPage";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="/add-campus" element={<AddCampus />} />
           <Route path="/campuses/:id" element={<SingleCampusPage />} />
           <Route path="/campuses/:id/edit" element={<EditCampusPage />} />
+          <Route path="/students/:id" element={<SingleStudentPage />} />
         </Routes>
       </Router>
     </Provider>
