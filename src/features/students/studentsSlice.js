@@ -26,7 +26,7 @@ const studentsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchStudents.fulfilled, (state, action) => {
-      return action.payload;
+      state.list = action.payload
     });
     builder.addCase(fetchSingleStudent.fulfilled, (state, action) => {
       console.log("Fetched single student:", action.payload);
