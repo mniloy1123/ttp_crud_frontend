@@ -49,6 +49,10 @@ const campusesSlice = createSlice({
       console.log("Fetched single campus:", action.payload);
       state.singleCampus = action.payload;
     });
+    builder.addCase(updateCampus.fulfilled, (state, action) => {
+      const campusIndex = state.list.findIndex((campus) => campus.id === action.payload.id);
+      state.list[campusIndex] = action.payload;
+    });
   },
 });
 
