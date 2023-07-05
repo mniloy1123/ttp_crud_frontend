@@ -11,6 +11,15 @@ export const updateStudent = createAsyncThunk("students/updateStudent", async ({
   return response.data;
 });
 
+export const fetchSingleStudent = createAsyncThunk(
+  "students/fetchSingleStudent",
+  async (id) => {
+    const response = await axios.get(`http://localhost:8080/api/students/${id}`);
+    console.log("Fetch single student response:", response.data);
+    return response.data;
+  }  
+)
+
 const campusesSlice = createSlice({
   name: "students",
   initialState: [],
