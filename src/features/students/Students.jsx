@@ -1,15 +1,23 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchStudents } from "./studentsSlice";
+import { fetchCampuses } from "../campuses/campusesSlice";
 import { Card, CardActionArea, CardContent, CardMedia, Button, Typography } from "@mui/material";
 
 const Students = () => {
   const dispatch = useDispatch();
   const students = useSelector((state) => state.students);
+  const campuses = useSelector((state) => state.campuses.list);
 
   useEffect(() => {
     dispatch(fetchStudents());
+    dispatch(fetchCampuses());
   }, [dispatch]);
+
+  const getCampusName = (campusId) => {
+    const campus = campuses.find((campus) => campus.id === campusId);
+    return campus ? campus.name : "No Campus";
+  };
 
   return (
     <div>
@@ -30,14 +38,11 @@ const Students = () => {
               <Typography gutterBottom variant="h5" component="div">
                 {student.firstName + " " + student.lastName}
               </Typography>
+              <Typography variant="body2" color="textSecondary">
+                Campus: {getCampusName(student.campusId)}
+              </Typography>
             </CardContent>
           </CardActionArea>
-          <Button size="small" color="primary">
-            Edit
-          </Button>
-          <Button size="small" color="secondary">
-            Delete
-          </Button>
         </Card>
       ))}
     </div>
