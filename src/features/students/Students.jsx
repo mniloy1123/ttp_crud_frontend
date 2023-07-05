@@ -6,7 +6,7 @@ import { Card, CardActionArea, CardContent, CardMedia, Button, Typography, Grid,
 
 const Students = () => {
   const dispatch = useDispatch();
-  const students = useSelector((state) => state.students);
+  const students = useSelector((state) => state.students.list);
   const campuses = useSelector((state) => state.campuses.list);
 
   useEffect(() => {
