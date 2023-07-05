@@ -22,7 +22,7 @@ const Campuses = () => {
 
   const handleCardClick = (id) => {
     navigate(`/campuses/${id}`);
-  }
+  };
 
   return (
     <div>
@@ -51,10 +51,24 @@ const Campuses = () => {
                     </Typography>
                   </CardContent>
                 </CardActionArea>
-                <Button size="small" color="primary">
+                <Button
+                  size="small"
+                  color="primary"
+                  onClick={(e) => {
+                    e.stopPropagation(); // This stops the click event from triggering the parent Card's onClick
+                    navigate(`/campuses/${campus.id}/edit`); // This will redirect to the edit campus page
+                  }}
+                >
                   Edit
                 </Button>
-                <Button size="small" color="error" onClick={() => handleDelete(campus.id)}>
+                <Button
+                  size="small"
+                  color="error"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the Card's onClick from firing when the button is clicked
+                    handleDelete(campus.id);
+                  }}
+                >
                   Delete
                 </Button>
               </Card>
