@@ -11,15 +11,28 @@ export const updateStudent = createAsyncThunk("students/updateStudent", async ({
   return response.data;
 });
 
-const campusesSlice = createSlice({
+export const fetchSingleStudent = createAsyncThunk(
+  "students/fetchSingleStudent",
+  async (id) => {
+    const response = await axios.get(`http://localhost:8080/api/students/${id}`);
+    console.log("Fetch single student response:", response.data);
+    return response.data;
+  }  
+)
+
+const studentsSlice = createSlice({
   name: "students",
-  initialState: [],
+  initialState: { list: [], singleStudent: {} },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchStudents.fulfilled, (state, action) => {
-      return action.payload;
+      state.list = action.payload
+    });
+    builder.addCase(fetchSingleStudent.fulfilled, (state, action) => {
+      console.log("Fetched single student:", action.payload);
+      state.singleStudent = action.payload;
     });
   },
 });
 
-export default campusesSlice.reducer;
+export default studentsSlice.reducer;

@@ -9,7 +9,7 @@ const Campuses = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const campuses = useSelector((state) => state.campuses.list);
-  const students = useSelector((state) => state.students);
+  const students = useSelector((state) => state.students.list);
 
   useEffect(() => {
     dispatch(fetchCampuses());
