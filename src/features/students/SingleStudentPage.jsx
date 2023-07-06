@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchSingleStudent, deleteStudent, updateStudent } from "./studentsSlice";
-import { fetchSingleCampus, updateCampus } from "../campuses/campusesSlice";
+import { fetchSingleCampus, fetchCampuses, updateCampus } from "../campuses/campusesSlice";
 import {
   Button,
   Card,
@@ -24,6 +24,10 @@ const SingleStudentPage = () => {
   const [studentCount, setStudentCount] = useState(0);
 
   useEffect(() => {
+    dispatch(fetchCampuses());
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(fetchSingleStudent(id));
   }, [dispatch, id]);
 
@@ -33,9 +37,7 @@ const SingleStudentPage = () => {
   };
 
   const handleCampusChange = (event) => {
-    const newCampusId = event.target.value;
-    setSelectedCampus(newCampusId);
-    dispatch(updateStudent({ id: student.id, campusId: newCampusId }));
+    setSelectedCampus(event.target.value);
   };
 
   const student = useSelector((state) => state.students.singleStudent);
@@ -53,8 +55,10 @@ const SingleStudentPage = () => {
     setStudentCount(count);
   }, [campus]);
 
-  const handleCampusUpdate = () => {
-    navigate(`/campuses/${campus.id}/edit`);
+  const handleCampusUpdate = (event) => {
+    const updatedStudent = { ...student, campusId: selectedCampus }; //copy student object and change campusId to selectedCampus
+    dispatch(updateStudent({ id: student.id, student: updatedStudent }));
+    navigate(`/students/${student.id}`); // navigate back to the student's page
   };
 
   return (
@@ -110,6 +114,16 @@ const SingleStudentPage = () => {
           Edit
         </Button>
       </Card>
+      <Box>
+          <Select value={selectedCampus} onChange={handleCampusChange}>
+            {campuses.map((campus) => (
+              <MenuItem key={campus.id} value={campus.id}>
+                {campus.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <Button onClick={handleCampusUpdate}>Change Campus</Button>
+        </Box>
     </div>
   );
 };
