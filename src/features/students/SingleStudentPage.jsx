@@ -28,12 +28,19 @@ const SingleStudentPage = () => {
 
   const student = useSelector((state) => state.students.singleStudent);
   const campus = useSelector((state) => state.campuses.singleCampus);
+  const campuses = useSelector((state) => state.campuses.campuses);
 
   useEffect(() => {
     if (student.campusId) {
       dispatch(fetchSingleCampus(student.campusId));
     }
   }, [dispatch, student]);
+
+  const handleCampusUpdate = () => {
+    navigate(`/campuses/${campus.id}/edit`)
+  }
+
+
 
   return (
     <div>
