@@ -31,7 +31,7 @@ const Students = () => {
         <Typography variant="h4" component="div">
           All Students
         </Typography>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={() => navigate("/add-student")}>
           Add Student
         </Button>
       </Box>

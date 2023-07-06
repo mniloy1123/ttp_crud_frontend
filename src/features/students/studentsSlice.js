@@ -30,6 +30,11 @@ export const updateStudent = createAsyncThunk("students/updateStudent", async ({
   return response.data;
 });
 
+export const addStudent = createAsyncThunk("students/addStudent", async (student) => {
+  const response = await axios.post("http://localhost:8080/api/students", student);
+  return response.data;
+});
+
 const studentsSlice = createSlice({
   name: "students",
   initialState: { list: [], singleStudent: {} },
@@ -52,6 +57,9 @@ const studentsSlice = createSlice({
       if (state.singleStudent.id === action.payload.id) {
         state.singleStudent = action.payload;
       }
+    });
+    builder.addCase(addStudent.fulfilled, (state, action) => {
+      state.list.push(action.payload);
     });
 
   },

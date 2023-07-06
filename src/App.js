@@ -11,6 +11,7 @@ import SingleCampusPage from "./features/campuses/SingleCampusPage";
 import SingleStudentPage from "./features/students/SingleStudentPage";
 import EditCampusPage from "./features/campuses/EditCampusPage";
 import EditStudentPage from "./features/students/EditStudentPage";
+import AddStudent from "./features/students/AddStudent";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/campuses/:id/edit" element={<EditCampusPage />} />
           <Route path="/students/:id" element={<SingleStudentPage />} />
           <Route path="/students/:id/edit" element={<EditStudentPage />} />
+          <Route path="/add-student" element={<AddStudent />} />
         </Routes>
       </Router>
     </Provider>
