@@ -58,6 +58,9 @@ const studentsSlice = createSlice({
         state.singleStudent = action.payload;
       }
     });
+    builder.addCase(addStudent.fulfilled, (state, action) => {
+      state.list.push(action.payload);
+    });
 
   },
 });
