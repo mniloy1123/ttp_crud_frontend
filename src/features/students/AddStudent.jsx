@@ -18,7 +18,7 @@ const AddStudent = () => {
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   const isEmailValid = emailRegex.test(email);
   const isFormValid =
-    firstName.trim() !== "" && imageUrl.trim() !== "" && lastName.trim() !== "" && isEmailValid && isGpaValid;
+    firstName.trim() !== "" && lastName.trim() !== "" && isEmailValid && isGpaValid;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -52,7 +52,6 @@ const AddStudent = () => {
         />
         <TextField
           margin="normal"
-          required
           label="Image Url"
           value={imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
