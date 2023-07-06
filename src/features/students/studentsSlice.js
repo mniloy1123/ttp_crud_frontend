@@ -6,9 +6,14 @@ export const fetchStudents = createAsyncThunk("students/fetchStudents", async ()
   return response.data;
 });
 
-export const updateStudent = createAsyncThunk("students/updateStudent", async ({id, student}) => {
-  const response = await axios.put(`http://localhost:8080/api/students/${id}`, student);
-  return response.data;
+
+export const deleteStudent = createAsyncThunk("students/deleteStudent", async (id, { rejectWithValue }) => {
+  try {
+    await axios.delete(`http://localhost:8080/api/students/${id}`);
+    return id;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
 });
 
 export const fetchSingleStudent = createAsyncThunk(
@@ -19,6 +24,11 @@ export const fetchSingleStudent = createAsyncThunk(
     return response.data;
   }  
 )
+
+export const updateStudent = createAsyncThunk("students/updateStudent", async ({ id, student }) => {
+  const response = await axios.put(`http://localhost:8080/api/students/${id}`, student);
+  return response.data;
+});
 
 const studentsSlice = createSlice({
   name: "students",
@@ -32,6 +42,18 @@ const studentsSlice = createSlice({
       console.log("Fetched single student:", action.payload);
       state.singleStudent = action.payload;
     });
+    builder.addCase(deleteStudent.fulfilled, (state, action) => {
+      state.list = state.list.filter((student) => student.id !== action.payload);
+    });
+    builder.addCase(updateStudent.fulfilled, (state, action) => {
+      const studentIndex = state.list.findIndex((student) => student.id === action.payload.id);
+      state.list[studentIndex] = action.payload;
+       // Also update singleStudent if it's the updated student
+      if (state.singleStudent.id === action.payload.id) {
+        state.singleStudent = action.payload;
+      }
+    });
+
   },
 });
 

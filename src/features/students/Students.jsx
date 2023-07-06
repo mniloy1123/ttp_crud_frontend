@@ -38,7 +38,7 @@ const Students = () => {
       <Grid container spacing={2}>
         {students.map((student) => (
           <Grid item xs={12} sm={6} md={4} lg={3} xl={2} marginLeft={2} key={student.id}>
-            <Card onClick={() => handleCardClick(student.id)} sx={{ maxWidth: 200 }}>
+            <Card onClick={() => handleCardClick(student.id)} sx={{ maxWidth: 250, minHeight: 265 }}>
               <CardActionArea>
                 <CardMedia
                   component="img"
