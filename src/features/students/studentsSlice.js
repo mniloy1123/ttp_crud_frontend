@@ -25,6 +25,11 @@ export const fetchSingleStudent = createAsyncThunk(
   }  
 )
 
+export const updateStudent = createAsyncThunk("students/updateStudent", async ({ id, student }) => {
+  const response = await axios.put(`http://localhost:8080/api/students/${id}`, student);
+  return response.data;
+});
+
 const studentsSlice = createSlice({
   name: "students",
   initialState: { list: [], singleStudent: {} },
@@ -40,6 +45,15 @@ const studentsSlice = createSlice({
     builder.addCase(deleteStudent.fulfilled, (state, action) => {
       state.list = state.list.filter((student) => student.id !== action.payload);
     });
+    builder.addCase(updateStudent.fulfilled, (state, action) => {
+      const studentIndex = state.list.findIndex((student) => student.id === action.payload.id);
+      state.list[studentIndex] = action.payload;
+       // Also update singleStudent if it's the updated student
+      if (state.singleStudent.id === action.payload.id) {
+        state.singleStudent = action.payload;
+      }
+    });
+
   },
 });
 
