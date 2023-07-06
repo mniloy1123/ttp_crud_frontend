@@ -21,6 +21,7 @@ const SingleStudentPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [selectedCampus, setSelectedCampus] = useState("");
+  const [studentCount, setStudentCount] = useState(0);
 
   useEffect(() => {
     dispatch(fetchSingleStudent(id));
@@ -40,7 +41,6 @@ const SingleStudentPage = () => {
   const student = useSelector((state) => state.students.singleStudent);
   const campus = useSelector((state) => state.campuses.singleCampus);
   const campuses = useSelector((state) => state.campuses.list);
-  const students = useSelector((state) => state.students.list);
 
   useEffect(() => {
     if (student.campusId) {
@@ -48,11 +48,15 @@ const SingleStudentPage = () => {
     }
   }, [dispatch, student]);
 
+  useEffect(() => {
+    const count = campus?.students.length || 0;
+    setStudentCount(count);
+  }, [campus]);
+
   const handleCampusUpdate = () => {
     navigate(`/campuses/${campus.id}/edit`);
   };
 
-  const studentCount = students.filter((student) => student.campusId === campus.id).length;
   return (
     <div>
       <h1>Show Student</h1>
@@ -81,12 +85,6 @@ const SingleStudentPage = () => {
       {campus && (
         <div>
           <h3>This student is registered to the following campus:</h3>
-          {students.length > 0 ? (
-            <p>{campus.name}</p>
-          ) : (
-            <p>Loading...</p>
-          )}
-
         </div>
       )}
       <Card onClick={() => navigate(`/campuses/${student.campusId}`)} sx={{ maxWidth: 345 }}>
