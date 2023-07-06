@@ -45,6 +45,8 @@ const EditCampusPage = () => {
     dispatch(updateStudent({ ...student, campusId: campus.id })); // Update the student with the new campus ID.
   };
 
+  const studentsOnCampus = allStudents.filter(student => student.campusId === campus.id);
+
   return (
     <div>
       <Box display="flex" justifyContent="center" m={2}>
@@ -107,6 +109,15 @@ const EditCampusPage = () => {
         <Button sx={{ mx: "auto", mt: 2 }} variant="contained" color="primary" onClick={() => handleAddStudent(selectedStudentId)}>
           Add Student
         </Button>
+
+        <Typography variant="h6" component="div">
+          Students on Campus
+        </Typography>
+        {studentsOnCampus.map(student => (
+          <Typography key={student.id}>
+            {student.firstName} {student.lastName}
+          </Typography>
+        ))}
       </Box>
     </div>
   );
