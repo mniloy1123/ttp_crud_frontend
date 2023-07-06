@@ -2,8 +2,19 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchSingleStudent, deleteStudent, updateStudent } from "./studentsSlice";
-import { fetchSingleCampus, deleteCampus, updateCampus } from "../campuses/campusesSlice";
-import { Button, Card, CardActionArea, CardContent, CardMedia, Typography, Box, Grid, MenuItem, Select } from "@mui/material";
+import { fetchSingleCampus, updateCampus } from "../campuses/campusesSlice";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+  Box,
+  Grid,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 const SingleStudentPage = () => {
   const navigate = useNavigate();
@@ -28,7 +39,8 @@ const SingleStudentPage = () => {
 
   const student = useSelector((state) => state.students.singleStudent);
   const campus = useSelector((state) => state.campuses.singleCampus);
-  const campuses = useSelector((state) => state.campuses.campuses);
+  const campuses = useSelector((state) => state.campuses.list);
+  const students = useSelector((state) => state.students.list);
 
   useEffect(() => {
     if (student.campusId) {
@@ -37,11 +49,10 @@ const SingleStudentPage = () => {
   }, [dispatch, student]);
 
   const handleCampusUpdate = () => {
-    navigate(`/campuses/${campus.id}/edit`)
-  }
+    navigate(`/campuses/${campus.id}/edit`);
+  };
 
-
-
+  const studentCount = students.filter((student) => student.campusId === campus.id).length;
   return (
     <div>
       <h1>Show Student</h1>
@@ -70,9 +81,37 @@ const SingleStudentPage = () => {
       {campus && (
         <div>
           <h3>This student is registered to the following campus:</h3>
-          <p>{campus.name}</p>
+          {students.length > 0 ? (
+            <p>{campus.name}</p>
+          ) : (
+            <p>Loading...</p>
+          )}
+
         </div>
       )}
+      <Card onClick={() => navigate(`/campuses/${student.campusId}`)} sx={{ maxWidth: 345 }}>
+        <CardActionArea>
+          <CardMedia component="img" height="140" image={campus?.imageUrl} alt={campus?.name} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {campus?.name}
+            </Typography>
+            <Typography variant="body2" color="textSecondary">
+              {studentCount} {studentCount === 1 ? "Student" : "Students"}
+            </Typography>
+          </CardContent>
+        </CardActionArea>
+        <Button
+          size="small"
+          color="primary"
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCampusUpdate();
+          }}
+        >
+          Edit
+        </Button>
+      </Card>
     </div>
   );
 };
