@@ -1,14 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
-import { fetchSingleStudent, deleteStudent } from "./studentsSlice";
-import { fetchSingleCampus } from "../campuses/campusesSlice";
-import { Button } from "@mui/material";
+import { fetchSingleStudent, deleteStudent, updateStudent } from "./studentsSlice";
+import { fetchSingleCampus, deleteCampus, updateCampus } from "../campuses/campusesSlice";
+import { Button, Card, CardActionArea, CardContent, CardMedia, Typography, Box, Grid, MenuItem, Select } from "@mui/material";
 
 const SingleStudentPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [selectedCampus, setSelectedCampus] = useState("");
 
   useEffect(() => {
     dispatch(fetchSingleStudent(id));
@@ -17,6 +18,12 @@ const SingleStudentPage = () => {
   const handleDelete = (id) => {
     dispatch(deleteStudent(id));
     navigate("/students");
+  };
+
+  const handleCampusChange = (event) => {
+    const newCampusId = event.target.value;
+    setSelectedCampus(newCampusId);
+    dispatch(updateStudent({ id: student.id, campusId: newCampusId }));
   };
 
   const student = useSelector((state) => state.students.singleStudent);
