@@ -31,7 +31,7 @@ const SingleStudentPage = () => {
   return (
     <div>
       <h1>Show Student</h1>
-      <h2>{student.name}</h2>
+      <h2>{student.firstName + " " + student.lastName}</h2>
       <img src={student.imageUrl} alt={student.name} />
       <p>GPA: {student.gpa}</p>
       <p>Email: {student.email}</p>
