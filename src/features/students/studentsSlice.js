@@ -30,6 +30,11 @@ export const updateStudent = createAsyncThunk("students/updateStudent", async ({
   return response.data;
 });
 
+export const addStudent = createAsyncThunk("students/addStudent", async (student) => {
+  const response = await axios.post("http://localhost:8080/api/students", student);
+  return response.data;
+});
+
 const studentsSlice = createSlice({
   name: "students",
   initialState: { list: [], singleStudent: {} },
