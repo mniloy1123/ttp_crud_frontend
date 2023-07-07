@@ -17,10 +17,20 @@ export const addCampus = createAsyncThunk("campuses/addCampus", async (campus) =
   return response.data;
 });
 
-export const updateCampus = createAsyncThunk("campuses/updateCampus", async ({ id, campus }) => {
-  const response = await axios.put(`http://localhost:8080/api/campuses/${id}`, campus);
-  return response.data;
-});
+export const updateCampus = createAsyncThunk(
+  'campuses/updateCampus',
+  async ({ id, campus }, { rejectWithValue }) => {
+    try {
+      console.log("updateCampus payload:", { id, campus }); // log the payload
+      const response = await axios.put(`http://localhost:8080/api/campuses/${id}`, campus);
+      console.log("updateCampus response:", response); // log the response
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 
 export const deleteCampus = createAsyncThunk("campuses/deleteCampus", async (id, { rejectWithValue }) => {
   try {
