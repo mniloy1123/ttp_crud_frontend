@@ -4,13 +4,13 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchStudents = createAsyncThunk("students/fetchStudents", async () => {
-  const response = await axios.get(`${BACKEND_URL}api/students`);
+  const response = await axios.get(`${BACKEND_URL}/api/students`);
   return response.data;
 });
 
 export const deleteStudent = createAsyncThunk("students/deleteStudent", async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`${BACKEND_URL}api/students/${id}`);
+    await axios.delete(`${BACKEND_URL}/api/students/${id}`);
     return id;
   } catch (error) {
     return rejectWithValue(error.response.data);
@@ -18,13 +18,13 @@ export const deleteStudent = createAsyncThunk("students/deleteStudent", async (i
 });
 
 export const fetchSingleStudent = createAsyncThunk("students/fetchSingleStudent", async (id) => {
-  const response = await axios.get(`${BACKEND_URL}api/students/${id}`);
+  const response = await axios.get(`${BACKEND_URL}/api/students/${id}`);
   return response.data;
 });
 
 export const updateStudent = createAsyncThunk("students/updateStudent", async ({id, student}, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`${BACKEND_URL}api/students/${id}`, student); 
+    const response = await axios.put(`${BACKEND_URL}/api/students/${id}`, student); 
     return response.data;
   } catch (err) {
     return rejectWithValue(err.message);
@@ -32,7 +32,7 @@ export const updateStudent = createAsyncThunk("students/updateStudent", async ({
 });
 
 export const addStudent = createAsyncThunk("students/addStudent", async (student) => {
-  const response = await axios.post(`${BACKEND_URL}api/students`, student);
+  const response = await axios.post(`${BACKEND_URL}/api/students`, student);
   return response.data;
 });
 
