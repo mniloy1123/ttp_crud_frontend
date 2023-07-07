@@ -28,11 +28,9 @@ const SingleStudentPage = () => {
 
   const handleCampusChange = (event) => {
     setSelectedCampus(event.target.value);
-    console.log(`Campus changed to ${event.target.value}`);
   };
 
   const student = useSelector((state) => {
-    console.log("Single Student State: ", state.students.singleStudent);
     return state.students.singleStudent;
   });
   const campus = useSelector((state) => state.campuses.singleCampus);
@@ -52,7 +50,6 @@ const SingleStudentPage = () => {
   const handleCampusUpdate = (event) => {
     event.preventDefault();
     const updatedStudent = { ...student, campusId: selectedCampus }; //copy student object and change campusId to selectedCampus
-    console.log(`Updating student: ${JSON.stringify(updatedStudent)}`);
     dispatch(updateStudent({ id: student.id, student: updatedStudent }));
     navigate(`/students/${student.id}`); // navigate back to the student's page
   };
