@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchSingleCampus, fetchCampuses } from "./campusesSlice";
@@ -7,13 +7,12 @@ import { useGetCampusName, useHandleCardClick } from "../../utils/utils";
 import StudentCard from "../../components/StudentCard";
 import StudentAddition from "./StudentAddition";
 //prettier-ignore
-import {Typography, Box, Grid, Card, CardActionArea, CardMedia, CardContent, Button, Select, MenuItem} from "@mui/material";
+import {Typography, Box, Grid} from "@mui/material";
 
 const SingleCampusPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const allStudents = useSelector((state) => state.students.list);
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchSingleCampus(id));

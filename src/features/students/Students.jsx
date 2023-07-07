@@ -5,13 +5,12 @@ import { fetchStudents } from "./studentsSlice";
 import { fetchCampuses } from "../campuses/campusesSlice";
 import { useGetCampusName, useHandleCardClick } from "../../utils/utils";
 import StudentCard from "../../components/StudentCard";
-import { Card, CardActionArea, CardContent, CardMedia, Button, Typography, Grid, Box } from "@mui/material";
+import { Button, Typography, Grid, Box } from "@mui/material";
 
 const Students = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const students = useSelector((state) => state.students.list);
-  const campuses = useSelector((state) => state.campuses.list);
 
   useEffect(() => {
     dispatch(fetchStudents());
