@@ -4,17 +4,17 @@ import axios from "axios";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 export const fetchCampuses = createAsyncThunk("campuses/fetchCampuses", async () => {
-  const response = await axios.get(`${BACKEND_URL}/api/campuses`);
+  const response = await axios.get(`${BACKEND_URL}api/campuses`);
   return response.data;
 });
 
 export const fetchSingleCampus = createAsyncThunk("campuses/fetchSingleCampus", async (id) => {
-  const response = await axios.get(`${BACKEND_URL}/api/campuses/${id}`);
+  const response = await axios.get(`${BACKEND_URL}api/campuses/${id}`);
   return response.data;
 });
 
 export const addCampus = createAsyncThunk("campuses/addCampus", async (campus) => {
-  const response = await axios.post(`${BACKEND_URL}/api/campuses`, campus);
+  const response = await axios.post(`${BACKEND_URL}api/campuses`, campus);
   return response.data;
 });
 
@@ -22,7 +22,7 @@ export const updateCampus = createAsyncThunk(
   'campuses/updateCampus',
   async ({ id, campus }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${BACKEND_URL}/api/campuses/${id}`, campus);
+      const response = await axios.put(`${BACKEND_URL}api/campuses/${id}`, campus);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.message);
@@ -33,7 +33,7 @@ export const updateCampus = createAsyncThunk(
 
 export const deleteCampus = createAsyncThunk("campuses/deleteCampus", async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`${BACKEND_URL}/api/campuses/${id}`);
+    await axios.delete(`${BACKEND_URL}api/campuses/${id}`);
     return id;
   } catch (error) {
     return rejectWithValue(error.response.data);
