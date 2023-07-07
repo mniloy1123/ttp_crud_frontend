@@ -14,7 +14,7 @@ const EditCampusPage = () => {
   const allStudents = useSelector((state) => state.students.list); //list
 
   const [campusInfo, setCampusInfo] = useState({ name: "", imageUrl: "", address: "", description: "" });
-  const [selectedStudentId, setSelectedStudentId] = useState("");
+  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchSingleCampus(id));
@@ -28,7 +28,6 @@ const EditCampusPage = () => {
     console.log("campusInfo has changed: ", campusInfo);
   }, [campusInfo]);
 
-
   const handleChange = (event) => {
     setCampusInfo({ ...campusInfo, [event.target.name]: event.target.value });
   };
@@ -41,11 +40,14 @@ const EditCampusPage = () => {
   };
 
   const handleAddStudent = (studentId) => {
-    const student = allStudents.find((student) => student.id === studentId);
+    console.log("Student ID to add: ", studentId);
+    const student = allStudents.find((student) => student.id === Number(studentId));
+    console.log("Found student: ", student);
     dispatch(updateStudent({ ...student, campusId: campus.id })); // Update the student with the new campus ID.
+    dispatch(fetchSingleCampus(id)); // Refetch the single campus data.
   };
 
-  const studentsOnCampus = allStudents.filter(student => student.campusId === campus.id);
+  const studentsOnCampus = allStudents.filter((student) => student.campusId === campus.id);
 
   return (
     <div>
@@ -99,21 +101,39 @@ const EditCampusPage = () => {
         <Typography variant="h6" component="div">
           Add a Student
         </Typography>
-        <Select value={selectedStudentId} onChange={(event) => setSelectedStudentId(event.target.value)}>
+        <Select
+          value={selectedStudentId || ""}
+          onChange={(event) => {
+            const newSelectedStudentId = event.target.value;
+            if (newSelectedStudentId) {
+              setSelectedStudentId(newSelectedStudentId);
+            }
+          }}
+        >
           {allStudents.map((student) => (
-            <MenuItem value={student.id} key={student.id}>
-              {student.firstName} {student.lastName}
+            <MenuItem key={student.id} value={student.id}>
+              {student.firstName + " " + student.lastName}
             </MenuItem>
           ))}
         </Select>
-        <Button sx={{ mx: "auto", mt: 2 }} variant="contained" color="primary" onClick={() => handleAddStudent(selectedStudentId)}>
+        <Button
+          sx={{ mx: "auto", mt: 2 }}
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            if (selectedStudentId) {
+              handleAddStudent(selectedStudentId);
+              setSelectedStudentId(null);
+            }
+          }}
+        >
           Add Student
         </Button>
 
         <Typography variant="h6" component="div">
           Students on Campus
         </Typography>
-        {studentsOnCampus.map(student => (
+        {studentsOnCampus.map((student) => (
           <Typography key={student.id}>
             {student.firstName} {student.lastName}
           </Typography>
