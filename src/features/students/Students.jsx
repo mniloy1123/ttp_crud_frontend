@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchStudents } from "./studentsSlice";
 import { fetchCampuses } from "../campuses/campusesSlice";
+import { useGetCampusName, useHandleCardClick} from "../../utils/utils";
 import { Card, CardActionArea, CardContent, CardMedia, Button, Typography, Grid, Box } from "@mui/material";
 
 const Students = () => {
@@ -16,14 +17,9 @@ const Students = () => {
     dispatch(fetchCampuses());
   }, [dispatch]);
 
-  const getCampusName = (campusId) => {
-    const campus = campuses.find((campus) => campus.id === campusId);
-    return campus ? campus.name : "No Campus";
-  };
+  const getCampusName = useGetCampusName();  
+  const handleCardClick = useHandleCardClick();
 
-  const handleCardClick = (id) => {
-    navigate(`/students/${id}`);
-  };
 
   return (
     <div>
