@@ -2,19 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchSingleStudent, deleteStudent, updateStudent } from "./studentsSlice";
-import { fetchSingleCampus, fetchCampuses, updateCampus } from "../campuses/campusesSlice";
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Typography,
-  Box,
-  Grid,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { fetchSingleCampus, fetchCampuses } from "../campuses/campusesSlice";
+// prettier-ignore
+import { Button, Card, CardActionArea, CardContent, CardMedia, Typography, Box, MenuItem, Select } from "@mui/material";
 
 const SingleStudentPage = () => {
   const navigate = useNavigate();
@@ -115,15 +105,15 @@ const SingleStudentPage = () => {
         </Button>
       </Card>
       <Box>
-          <Select value={selectedCampus} onChange={handleCampusChange}>
-            {campuses.map((campus) => (
-              <MenuItem key={campus.id} value={campus.id}>
-                {campus.name}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button onClick={handleCampusUpdate}>Change Campus</Button>
-        </Box>
+        <Select value={selectedCampus} onChange={handleCampusChange}>
+          {campuses.map((campus) => (
+            <MenuItem key={campus.id} value={campus.id}>
+              {campus.name}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button onClick={handleCampusUpdate}>Change Campus</Button>
+      </Box>
     </div>
   );
 };

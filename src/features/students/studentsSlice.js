@@ -6,7 +6,6 @@ export const fetchStudents = createAsyncThunk("students/fetchStudents", async ()
   return response.data;
 });
 
-
 export const deleteStudent = createAsyncThunk("students/deleteStudent", async (id, { rejectWithValue }) => {
   try {
     await axios.delete(`http://localhost:8080/api/students/${id}`);
@@ -16,29 +15,22 @@ export const deleteStudent = createAsyncThunk("students/deleteStudent", async (i
   }
 });
 
-export const fetchSingleStudent = createAsyncThunk(
-  "students/fetchSingleStudent",
-  async (id) => {
-    const response = await axios.get(`http://localhost:8080/api/students/${id}`);
-    console.log("Fetch single student response:", response.data);
+export const fetchSingleStudent = createAsyncThunk("students/fetchSingleStudent", async (id) => {
+  const response = await axios.get(`http://localhost:8080/api/students/${id}`);
+  console.log("Fetch single student response:", response.data);
+  return response.data;
+});
+
+export const updateStudent = createAsyncThunk("students/updateStudent", async (updatedStudent, { rejectWithValue }) => {
+  try {
+    console.log("updateStudent payload:", updatedStudent); // add this log
+    const response = await axios.put(`http://localhost:8080/api/students/${updatedStudent.id}`, updatedStudent);
+    console.log("updateStudent response:", response); // and this log
     return response.data;
-  }  
-)
-
-export const updateStudent = createAsyncThunk(
-  'students/updateStudent',
-  async (updatedStudent, { rejectWithValue }) => {
-    try {
-      console.log("updateStudent payload:", updatedStudent); // add this log
-      const response = await axios.put(`http://localhost:8080/api/students/${updatedStudent.id}`, updatedStudent);
-      console.log("updateStudent response:", response); // and this log
-      return response.data;
-    } catch (err) {
-      return rejectWithValue(err.message);
-    }
+  } catch (err) {
+    return rejectWithValue(err.message);
   }
-);
-
+});
 
 export const addStudent = createAsyncThunk("students/addStudent", async (student) => {
   const response = await axios.post("http://localhost:8080/api/students", student);
@@ -51,7 +43,7 @@ const studentsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchStudents.fulfilled, (state, action) => {
-      state.list = action.payload
+      state.list = action.payload;
     });
     builder.addCase(fetchSingleStudent.fulfilled, (state, action) => {
       console.log("Fetched single student:", action.payload);
@@ -64,7 +56,7 @@ const studentsSlice = createSlice({
       console.log("Updated student: ", action.payload);
       const studentIndex = state.list.findIndex((student) => student.id === action.payload.id);
       state.list[studentIndex] = action.payload;
-       // Also update singleStudent if it's the updated student
+      // Also update singleStudent if it's the updated student
       if (state.singleStudent.id === action.payload.id) {
         state.singleStudent = action.payload;
       }
@@ -72,7 +64,6 @@ const studentsSlice = createSlice({
     builder.addCase(addStudent.fulfilled, (state, action) => {
       state.list.push(action.payload);
     });
-
   },
 });
 

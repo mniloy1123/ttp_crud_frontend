@@ -17,8 +17,7 @@ const AddStudent = () => {
   const isGpaValid = !isNaN(gpaNumber) && gpaNumber >= 0.0 && gpaNumber <= 4.0;
   const emailRegex = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
   const isEmailValid = emailRegex.test(email);
-  const isFormValid =
-    firstName.trim() !== "" && lastName.trim() !== "" && isEmailValid && isGpaValid;
+  const isFormValid = firstName.trim() !== "" && lastName.trim() !== "" && isEmailValid && isGpaValid;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -50,12 +49,7 @@ const AddStudent = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <TextField
-          margin="normal"
-          label="Image Url"
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
+        <TextField margin="normal" label="Image Url" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
         <TextField
           margin="normal"
           required

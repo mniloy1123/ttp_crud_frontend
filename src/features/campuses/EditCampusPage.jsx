@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  TextField,
-  Typography,
-  Button,
-  Box,
-  Select,
-  MenuItem,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActionArea,
-  Grid,
-} from "@mui/material";
+import {TextField, Typography, Button, Box, Card, CardMedia, CardContent, CardActionArea, Grid, } from "@mui/material"; // prettier-ignore
 import { fetchSingleCampus, updateCampus } from "./campusesSlice";
+import StudentAddition from "./StudentAddition";
 import { fetchStudents, updateStudent } from "../students/studentsSlice";
 
 const EditCampusPage = () => {
@@ -26,7 +15,6 @@ const EditCampusPage = () => {
   const allStudents = useSelector((state) => state.students.list); //list
 
   const [campusInfo, setCampusInfo] = useState({ name: "", imageUrl: "", address: "", description: "" });
-  const [selectedStudentId, setSelectedStudentId] = useState(null);
 
   useEffect(() => {
     dispatch(fetchSingleCampus(id));
@@ -110,64 +98,32 @@ const EditCampusPage = () => {
         </Box>
       </form>
       <Box m={2}>
-        <Typography variant="h5" component="div" align="center">
-          Add a Student
-        </Typography>
-        <Box display="flex" justifyContent="center" alignItems="center" gap={2} mt={2}>
-          <Select
-            value={selectedStudentId || ""}
-            onChange={(event) => {
-              const newSelectedStudentId = event.target.value;
-              if (newSelectedStudentId) {
-                setSelectedStudentId(newSelectedStudentId);
-              }
-            }}
-          >
-            {allStudents.map((student) => (
-              <MenuItem key={student.id} value={student.id}>
-                {student.firstName + " " + student.lastName}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              if (selectedStudentId) {
-                handleAddStudent(selectedStudentId);
-                setSelectedStudentId(null);
-              }
-            }}
-          >
-            Add Student
-          </Button>
-        </Box>
-
-        <Typography variant="h6" component="div" align="center" mt={2}>
-          Students on Campus
-        </Typography>
-        <Grid container spacing={2}>
-          {studentsOnCampus.map((student) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={student.id}>
-              <Card sx={{ maxWidth: 250, minHeight: 265 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={student.imageUrl}
-                    alt={student.firstName + " " + student.lastName}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {student.firstName + " " + student.lastName}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        <StudentAddition onAddStudent={handleAddStudent} />
       </Box>
+      <Typography variant="h6" component="div" align="center" mt={2}>
+        Students on Campus
+      </Typography>
+      <Grid container spacing={2}>
+        {studentsOnCampus.map((student) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={student.id}>
+            <Card sx={{ maxWidth: 250, minHeight: 265 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={student.imageUrl}
+                  alt={student.firstName + " " + student.lastName}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {student.firstName + " " + student.lastName}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
