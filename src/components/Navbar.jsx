@@ -4,17 +4,17 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="static" style={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
       <Toolbar>
         <Box display="flex" justifyContent="space-between" width="100%">
-          <Button color="inherit" component={Link} to="/">
+          <Button color="primary" component={Link} to="/">
             Home
           </Button>
           <Box>
-            <Button color="inherit" component={Link} to="/campuses">
+            <Button color="primary" component={Link} to="/campuses">
               Campuses
             </Button>
-            <Button color="inherit" component={Link} to="/students">
+            <Button color="primary" component={Link} to="/students">
               Students
             </Button>
           </Box>

@@ -8,7 +8,6 @@ export const fetchCampuses = createAsyncThunk("campuses/fetchCampuses", async ()
 
 export const fetchSingleCampus = createAsyncThunk("campuses/fetchSingleCampus", async (id) => {
   const response = await axios.get(`http://localhost:8080/api/campuses/${id}`);
-  console.log("Fetch single campus response:", response.data);
   return response.data;
 });
 
@@ -17,10 +16,18 @@ export const addCampus = createAsyncThunk("campuses/addCampus", async (campus) =
   return response.data;
 });
 
-export const updateCampus = createAsyncThunk("campuses/updateCampus", async ({ id, campus }) => {
-  const response = await axios.put(`http://localhost:8080/api/campuses/${id}`, campus);
-  return response.data;
-});
+export const updateCampus = createAsyncThunk(
+  'campuses/updateCampus',
+  async ({ id, campus }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`http://localhost:8080/api/campuses/${id}`, campus);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
 
 export const deleteCampus = createAsyncThunk("campuses/deleteCampus", async (id, { rejectWithValue }) => {
   try {
@@ -46,7 +53,6 @@ const campusesSlice = createSlice({
       state.list = state.list.filter((campus) => campus.id !== action.payload);
     });
     builder.addCase(fetchSingleCampus.fulfilled, (state, action) => {
-      console.log("Fetched single campus:", action.payload);
       state.singleCampus = action.payload;
     });
     builder.addCase(updateCampus.fulfilled, (state, action) => {

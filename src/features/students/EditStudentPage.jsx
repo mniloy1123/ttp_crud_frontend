@@ -41,9 +41,7 @@ const EditStudentPage = () => {
 
   const handleUpdate = async () => {
     if (isFormValid) {
-      console.log("Before update: ", studentInfo);
       await dispatch(updateStudent({ id: student.id, student: studentInfo }));
-      console.log("After update: ", studentInfo);
       navigate(`/students/`);
     }
   };

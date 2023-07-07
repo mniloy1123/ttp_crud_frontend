@@ -26,9 +26,7 @@ const SingleCampusPage = () => {
   const handleCardClick = useHandleCardClick();
 
   const handleAddStudent = (studentId) => {
-    console.log("Student ID to add: ", studentId);
     const student = allStudents.find((student) => student.id === Number(studentId));
-    console.log("Found student: ", student);
     dispatch(updateStudent({ ...student, campusId: campus.id })).then(() => {
       dispatch(fetchSingleCampus(id)); // Refetch the single campus data.
     });

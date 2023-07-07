@@ -33,16 +33,12 @@ const EditCampusPage = () => {
   };
 
   const handleUpdate = async () => {
-    console.log("Before update: ", campusInfo);
     await dispatch(updateCampus({ id: campus.id, campus: campusInfo }));
-    console.log("After update: ", campusInfo);
     navigate(`/campuses/`); // Navigate back to the campus page after updating the campus.
   };
 
   const handleAddStudent = (studentId) => {
-    console.log("Student ID to add: ", studentId);
     const student = allStudents.find((student) => student.id === Number(studentId));
-    console.log("Found student: ", student);
     dispatch(updateStudent({ ...student, campusId: campus.id })); // Update the student with the new campus ID.
     dispatch(fetchSingleCampus(id)); // Refetch the single campus data.
   };
