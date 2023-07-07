@@ -115,15 +115,15 @@ const SingleStudentPage = () => {
         </Button>
       </Card>
       <Box>
-          <Select value={selectedCampus} onChange={handleCampusChange}>
-            {campuses.map((campus) => (
-              <MenuItem key={campus.id} value={campus.id}>
-                {campus.name}
-              </MenuItem>
-            ))}
-          </Select>
-          <Button onClick={handleCampusUpdate}>Change Campus</Button>
-        </Box>
+        <Select value={selectedCampus} onChange={handleCampusChange}>
+          {campuses.map((campus) => (
+            <MenuItem key={campus.id} value={campus.id}>
+              {campus.name}
+            </MenuItem>
+          ))}
+        </Select>
+        <Button onClick={handleCampusUpdate}>Change Campus</Button>
+      </Box>
     </div>
   );
 };

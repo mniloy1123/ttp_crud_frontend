@@ -3,7 +3,7 @@ import { Grid, Card, CardActionArea, CardMedia, CardContent, Typography } from "
 
 const StudentCard = ({ student, handleCardClick, getCampusName }) => {
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3} xl={2} sx={{ml: 2}}>
+    <Grid item xs={12} sm={6} md={4} lg={3} xl={2} sx={{ ml: 2 }}>
       <Card onClick={() => handleCardClick(student.id)} sx={{ maxWidth: 250, minHeight: 265 }}>
         <CardActionArea>
           <CardMedia

@@ -6,18 +6,8 @@ import { fetchStudents, updateStudent } from "../students/studentsSlice";
 import { useGetCampusName, useHandleCardClick } from "../../utils/utils";
 import StudentCard from "../../components/StudentCard";
 import StudentAddition from "./StudentAddition";
-import {
-  Typography,
-  Box,
-  Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  Button,
-  Select,
-  MenuItem,
-} from "@mui/material";
+//prettier-ignore
+import {Typography, Box, Grid, Card, CardActionArea, CardMedia, CardContent, Button, Select, MenuItem} from "@mui/material";
 
 const SingleCampusPage = () => {
   const { id } = useParams();
@@ -62,14 +52,14 @@ const SingleCampusPage = () => {
           </Typography>
         </Box>
       </Box>
-  
+
       <Box display="flex" flexDirection="column" alignItems="center">
         <StudentAddition onAddStudent={handleAddStudent} />
         <Typography variant="h6" component="div" align="center" mt={2}>
           Students on Campus
         </Typography>
       </Box>
-  
+
       <Grid container spacing={2}>
         {campus.students &&
           campus.students.map((student) => (
@@ -84,6 +74,5 @@ const SingleCampusPage = () => {
     </Box>
   );
 };
-  
 
 export default SingleCampusPage;

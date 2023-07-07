@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {TextField, Typography, Button, Box, Card, CardMedia, CardContent, CardActionArea, Grid, } from "@mui/material"; // prettier-ignore
 import { fetchSingleCampus, updateCampus } from "./campusesSlice";
-import StudentAddition  from "./StudentAddition";
+import StudentAddition from "./StudentAddition";
 import { fetchStudents, updateStudent } from "../students/studentsSlice";
 
 const EditCampusPage = () => {
@@ -101,29 +101,29 @@ const EditCampusPage = () => {
         <StudentAddition onAddStudent={handleAddStudent} />
       </Box>
       <Typography variant="h6" component="div" align="center" mt={2}>
-          Students on Campus
-        </Typography>
-        <Grid container spacing={2}>
-          {studentsOnCampus.map((student) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={student.id}>
-              <Card sx={{ maxWidth: 250, minHeight: 265 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={student.imageUrl}
-                    alt={student.firstName + " " + student.lastName}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {student.firstName + " " + student.lastName}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        Students on Campus
+      </Typography>
+      <Grid container spacing={2}>
+        {studentsOnCampus.map((student) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={student.id}>
+            <Card sx={{ maxWidth: 250, minHeight: 265 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={student.imageUrl}
+                  alt={student.firstName + " " + student.lastName}
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {student.firstName + " " + student.lastName}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
     </div>
   );
 };
