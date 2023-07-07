@@ -21,11 +21,9 @@ export const fetchSingleStudent = createAsyncThunk("students/fetchSingleStudent"
   return response.data;
 });
 
-export const updateStudent = createAsyncThunk("students/updateStudent", async (updatedStudent, { rejectWithValue }) => {
+export const updateStudent = createAsyncThunk("students/updateStudent", async ({id, student}, { rejectWithValue }) => {
   try {
-    console.log("updateStudent payload:", updatedStudent); // add this log
-    const response = await axios.put(`http://localhost:8080/api/students/${updatedStudent.id}`, updatedStudent);
-    console.log("updateStudent response:", response); // and this log
+    const response = await axios.put(`http://localhost:8080/api/students/${id}`, student); 
     return response.data;
   } catch (err) {
     return rejectWithValue(err.message);
